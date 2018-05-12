@@ -168,7 +168,7 @@ class ProcedureHandler
         $instance = is_string($class) ? new $class : $class;
         $reflection = new ReflectionMethod($class, $method);
 
-        $this->executeBeforeMethod($instance, $method);
+        $params = $this->executeBeforeMethod($instance, $method, $params);
 
         $arguments = $this->getArguments(
             $params,
@@ -186,12 +186,19 @@ class ProcedureHandler
      * @access public
      * @param  mixed  $object
      * @param  string $method
+     * @param  mixed $params
+     *
+     * @return mixed
      */
-    public function executeBeforeMethod($object, $method)
+    public function executeBeforeMethod($object, $method, $params)
     {
         if ($this->beforeMethodName !== '' && method_exists($object, $this->beforeMethodName)) {
-            call_user_func_array(array($object, $this->beforeMethodName), array($method));
+            $params = call_user_func_array(array($object, $this->beforeMethodName), array($method, $params));
         }
+        if (!is_array($params)) {
+            $params = [];
+        }
+        return $params;
     }
 
     /**
