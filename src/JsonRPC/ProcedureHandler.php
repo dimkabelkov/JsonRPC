@@ -147,8 +147,7 @@ class ProcedureHandler
         $arguments = $this->getArguments(
             $params,
             $reflection->getParameters(),
-            $reflection->getNumberOfRequiredParameters(),
-            $reflection->getNumberOfParameters()
+            $reflection->getNumberOfRequiredParameters()
         );
 
         return $reflection->invokeArgs($arguments);
@@ -173,8 +172,7 @@ class ProcedureHandler
         $arguments = $this->getArguments(
             $params,
             $reflection->getParameters(),
-            $reflection->getNumberOfRequiredParameters(),
-            $reflection->getNumberOfParameters()
+            $reflection->getNumberOfRequiredParameters()
         );
 
         return $reflection->invokeArgs($instance, $arguments);
@@ -208,19 +206,14 @@ class ProcedureHandler
      * @param  array   $requestParams    Incoming arguments
      * @param  array   $methodParams     Procedure arguments
      * @param  integer $nbRequiredParams Number of required parameters
-     * @param  integer $nbMaxParams      Maximum number of parameters
      * @return array
      */
-    public function getArguments(array $requestParams, array $methodParams, $nbRequiredParams, $nbMaxParams)
+    public function getArguments(array $requestParams, array $methodParams, $nbRequiredParams)
     {
         $nbParams = count($requestParams);
 
         if ($nbParams < $nbRequiredParams) {
             throw new InvalidArgumentException('Wrong number of arguments');
-        }
-
-        if ($nbParams > $nbMaxParams) {
-            throw new InvalidArgumentException('Too many arguments');
         }
 
         if ($this->isPositionalArguments($requestParams)) {
