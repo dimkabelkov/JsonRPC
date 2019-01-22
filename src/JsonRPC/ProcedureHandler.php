@@ -220,7 +220,7 @@ class ProcedureHandler
         }
 
         if ($nbParams > $nbMaxParams) {
-            throw new InvalidArgumentException('Too many arguments');
+//            throw new InvalidArgumentException('Too many arguments');
         }
 
         if ($this->isPositionalArguments($requestParams)) {
